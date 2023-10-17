@@ -15,6 +15,7 @@ namespace MyToDo.ViewModels
         {
             TaskBars = new ObservableCollection<TaskBar> ();
             CreatTaskBars();
+            CreateTestDate();
         }
 
 
@@ -25,6 +26,21 @@ namespace MyToDo.ViewModels
             get { return taskbars; }
             set { taskbars = value; RaisePropertyChanged(); }
         }
+        private ObservableCollection<ToDoDto> toDoDtos;
+
+        public ObservableCollection<ToDoDto> ToDoDtos
+        {
+            get { return toDoDtos; }
+            set { toDoDtos = value; RaisePropertyChanged(); }
+        }
+        private ObservableCollection<MemoDto> memoDtos;
+
+        public ObservableCollection<MemoDto> MemoDtos
+        {
+            get { return memoDtos; }
+            set { memoDtos = value; RaisePropertyChanged(); }
+        }
+
         void CreatTaskBars() 
         {
 
@@ -34,6 +50,18 @@ namespace MyToDo.ViewModels
             TaskBars.Add( new TaskBar() { Icon = "PlaylistStar", Color= "#ffff0000", Content="9" , Target="", Title="备忘录"   });
 
 
+        }
+        void CreateTestDate() 
+        {
+            ToDoDtos= new ObservableCollection<ToDoDto>();
+            MemoDtos = new ObservableCollection<MemoDto>();
+            for (int i = 0; i < 10; i++)
+            {
+                ToDoDtos.Add(new ToDoDto() { Title="待办"+i , Content="正在处理中。。。。。" });
+                MemoDtos.Add(new MemoDto() { Title = "备忘"+i , Content = "我的密码" });
+
+            }
+        
         }
 
     }

@@ -16,7 +16,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock FontSize="22" Text=" 你好 今天是 jajjdsjajd" />
+        <TextBlock FontSize="22" Text=" 你好 今天是 " />
         <ItemsControl Grid.Row="1" ItemsSource="{Binding TaskBars}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -24,21 +24,40 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
+                
                 <DataTemplate>
                     <Border
+                        Cursor="Hand"
                         Margin="10"
                         Background="{Binding Color}"
                         CornerRadius="5">
+                        <Border.Style>
+ 
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Effect" >
+                                            <Setter.Value>
+                                                <DropShadowEffect Color="AliceBlue" ShadowDepth="1" BlurRadius="10">
+                                                   
+                                                </DropShadowEffect>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                            
+                        </Border.Style>
                         <Grid>
-                            <StackPanel Margin="20,10">
+                            <StackPanel Margin="10,10">
                                 <materialDesign:PackIcon
                                     Width="40"
                                     Height="40"
                                     Margin="10,0"
                                     Kind="{Binding Icon}" />
-                                <TextBlock Margin="15,10" Text="{Binding Title}" />
+                                <TextBlock Margin="15,0" Text="{Binding Title}" />
                                 <TextBlock
-                                    Margin="0,10"
+                                    Margin="10,5"
                                     FontSize="40"
                                     FontWeight="Bold"
                                     Text="{Binding Content}" />
@@ -78,23 +97,48 @@
                 Background="#bebebe"
                 CornerRadius="5"
                 Opacity="0.1" />
-            <DockPanel>
+            <DockPanel Margin="10,0">
 
-                <DockPanel Margin="10,5" LastChildFill="False">
+                <DockPanel
+                    Margin="10,5"
+                    Cursor=""
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
                     <TextBlock
-                        FontSize="20"
+                        FontSize="25"
                         FontWeight="Bold"
                         Text="待办事项" />
                     <Button
-                        Width="50"
-                        Height="50"
+                        Width="30"
+                        Height="30"
                         VerticalAlignment="Top"
-                        Cursor="Hand"
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                         <materialDesign:PackIcon Cursor="" Kind="Add" />
                     </Button>
                 </DockPanel>
+
+
+                <ListBox ItemsSource="{Binding ToDoDtos}" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel  MaxHeight="80" LastChildFill="True">
+                                <ToggleButton DockPanel.Dock="Right"/>
+                                <StackPanel Cursor="Hand">
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Text="{Binding Title}" />
+                                <TextBlock
+                                    Margin="0,5"
+                                    Opacity="0.5"
+                                    Text="{Binding Content}" />
+                            </StackPanel>
+                            </DockPanel>
+                        </DataTemplate>
+
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
             </DockPanel>
             <Border
@@ -103,16 +147,19 @@
                 Background="#bebebe"
                 CornerRadius="5"
                 Opacity="0.1" />
-            <DockPanel Grid.Column="1">
+            <DockPanel Grid.Column="1" Margin="10,0">
 
-                <DockPanel Margin="10,5" LastChildFill="False">
+                <DockPanel
+                    Margin="10,5"
+                    DockPanel.Dock="Top"
+                    LastChildFill="False">
                     <TextBlock
-                        FontSize="20"
+                        FontSize="25"
                         FontWeight="Bold"
                         Text="备忘录" />
                     <Button
-                        Width="50"
-                        Height="50"
+                        Width="30"
+                        Height="30"
                         VerticalAlignment="Top"
                         Cursor="Hand"
                         DockPanel.Dock="Right"
@@ -120,6 +167,24 @@
                         <materialDesign:PackIcon Cursor="" Kind="Add" />
                     </Button>
                 </DockPanel>
+
+                <ListBox ItemsSource="{Binding MemoDtos}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Text="{Binding Title}" />
+                                <TextBlock
+                                    Margin="0,5"
+                                    Opacity="0.5"
+                                    Text="{Binding Content}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
 
             </DockPanel>
         </Grid>

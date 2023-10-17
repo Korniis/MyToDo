@@ -13,6 +13,8 @@
     Title="MainWindow"
     Width="1280"
     Height="768"
+    MaxWidth="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}"
+    MaxHeight="{StaticResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
     d:DataContext="{d:DesignInstance Type=models:MenuBar}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
@@ -26,32 +28,42 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-
     <Grid>
-        <materialDesign:DialogHost DialogTheme="Inherit" Identifier="RootDialog">
 
-            <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+        <materialDesign:DialogHost
+            x:Name="DialogHost"
+            DialogTheme="Inherit"
+            Identifier="RootDialog">
+
+            <materialDesign:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+
                 <materialDesign:DrawerHost.LeftDrawerContent>
-                    <DockPanel MinWidth="220">
-                        <StackPanel Margin="0,20" DockPanel.Dock="top">
-                            <Image
-                                Width="50"
-                                Height="50"
-                                Margin="0,0,10,0"
-                                Source="/Resource/touxiang.jpg">
-                                <Image.Clip>
-                                    <EllipseGeometry
-                                        Center="25 ,25"
-                                        RadiusX="25"
-                                        RadiusY="25" />
-                                </Image.Clip>
-                            </Image>
-                            <TextBlock
-                                Margin="0,10"
-                                HorizontalAlignment="Center"
-                                Text="EnBoWer" />
-                        </StackPanel>
 
+                    <DockPanel MinWidth="220" LastChildFill="True">
+                        <Border
+                            BorderBrush="AliceBlue"
+                            BorderThickness="0,0,0,1"
+                            DockPanel.Dock="top">
+                            <StackPanel Margin="0,20,0,10">
+                                <Image
+                                    Width="50"
+                                    Height="50"
+                                    Margin="0,0,10,0"
+                                    Source="/Resource/touxiang.jpg">
+                                    <Image.Clip>
+                                        <EllipseGeometry
+                                            Center="25 ,25"
+                                            RadiusX="25"
+                                            RadiusY="25" />
+                                    </Image.Clip>
+                                </Image>
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Center"
+                                    FontSize="25"
+                                    Text="EnBoWer" />
+                            </StackPanel>
+                        </Border>
                         <ListBox
                             x:Name="menuBar"
                             ItemContainerStyle="{StaticResource MyListBoxItemStyle}"
@@ -127,6 +139,7 @@
                                     x:Name="MenuToggleButton"
                                     AutomationProperties.Name="HamburgerToggleButton"
                                     IsChecked="False"
+                                    
                                     Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
 
                                 <Button
@@ -163,6 +176,7 @@
 
                         </DockPanel>
                     </materialDesign:ColorZone>
+
                     <ContentControl prism:RegionManager.RegionName="{x:Static ext:PrismManager.MainViewRegionName}" />
                 </DockPanel>
             </materialDesign:DrawerHost>

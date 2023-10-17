@@ -18,7 +18,7 @@ namespace MyToDo.ViewModels
         public MainViewModel(IRegionManager regionManager)
         {
             MenuBars = new ObservableCollection<MenuBar>();
-            CreateMenuBars(); 
+            CreateMenuBars();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
             GoBackCommand = new DelegateCommand(() =>
@@ -29,7 +29,7 @@ namespace MyToDo.ViewModels
             GoForwardCommand = new DelegateCommand(() =>
 
             {
-                if (journal!=null &&journal.CanGoForward) { journal.GoForward(); }
+                if (journal != null && journal.CanGoForward) { journal.GoForward(); }
             });
         }
         private void Navigate(MenuBar obj)
@@ -42,7 +42,7 @@ namespace MyToDo.ViewModels
                 journal = back.Context.NavigationService.Journal;
 
             });
-           
+
         }
         private IRegionNavigationJournal journal;
 
@@ -64,6 +64,7 @@ namespace MyToDo.ViewModels
             MenuBars.Add(new MenuBar() { Icon = "Home", NameSpace = "IndexView", Title = "首页" });
             MenuBars.Add(new MenuBar() { Icon = "CodeNotEqual", NameSpace = "ToDoView", Title = "待办事项" });
             MenuBars.Add(new MenuBar() { Icon = "Note", NameSpace = "MemoView", Title = "备忘录" });
+            MenuBars.Add(new MenuBar() { Icon = "Net", NameSpace = "NetView", Title = "上网" });
             MenuBars.Add(new MenuBar() { Icon = "Cog", NameSpace = "SettingsView", Title = "设置" });
         }
     }
