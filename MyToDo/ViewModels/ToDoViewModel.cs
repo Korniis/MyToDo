@@ -1,4 +1,5 @@
 ﻿using MyToDo.Common.Models;
+using Prism.Commands;
 using Prism.Common;
 using Prism.Mvvm;
 using System;
@@ -16,7 +17,24 @@ namespace MyToDo.ViewModels
         {
             ToDoDtos = new ObservableCollection<ToDoDto>();
             CreatToDoList();
+            AddCommand = new DelegateCommand(Add);
         }
+
+        private void Add()
+        {
+           IsRightDrawerOpen = true;
+        }
+        /// <summary>
+        /// 右侧窗口展开
+        /// </summary>
+        private bool isRightDrawerOpen;
+
+        public bool IsRightDrawerOpen
+        {
+            get { return isRightDrawerOpen; }
+            set { isRightDrawerOpen = value;  RaisePropertyChanged(); }
+        }
+
         private ObservableCollection<ToDoDto> toDoDtos;
 
         public ObservableCollection<ToDoDto> ToDoDtos
@@ -37,7 +55,7 @@ namespace MyToDo.ViewModels
 
             }
         }
-
+        public DelegateCommand AddCommand { get; private set; }
 
     }
 

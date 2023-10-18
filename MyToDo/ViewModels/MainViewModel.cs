@@ -24,7 +24,7 @@ namespace MyToDo.ViewModels
             GoBackCommand = new DelegateCommand(() =>
 
             {
-                if (journal != null && journal.CanGoBack) { journal.GoBack(); }
+                if (journal != null && journal.CanGoBack) { journal.GoBack();  SelectedMenuBar= MenuBars.Where(t=>t.NameSpace= ) }
             });
             GoForwardCommand = new DelegateCommand(() =>
 
@@ -42,8 +42,17 @@ namespace MyToDo.ViewModels
                 journal = back.Context.NavigationService.Journal;
 
             });
+            
 
         }
+        private MenuBar selectedMenuBar;
+
+        public MenuBar SelectedMenuBar
+        {
+            get { return selectedMenuBar; }
+            set { selectedMenuBar = value; RaisePropertyChanged(); }
+        }
+
         private IRegionNavigationJournal journal;
 
         public DelegateCommand<MenuBar> NavigateCommand { get; private set; }

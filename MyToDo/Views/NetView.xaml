@@ -15,11 +15,20 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+            <StackPanel  Orientation="Horizontal">
+             
+               
+            </StackPanel>
+            <Button 
+                    Margin="10,5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Content="返回首页"  Click="Button_Click"/>
             <wv2:WebView2   
                 x:Name="webView"
                 Grid.Row="1"
-             Width="800"
+                
+             
                 Source="https://www.baidu.com" />
         </Grid>
     </Grid>
