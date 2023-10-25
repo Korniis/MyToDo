@@ -24,7 +24,7 @@ namespace MyToDo.ViewModels
             GoBackCommand = new DelegateCommand(() =>
 
             {
-                if (journal != null && journal.CanGoBack) { journal.GoBack();  SelectedMenuBar= MenuBars.Where(t=>t.NameSpace= ) }
+                if (journal != null && journal.CanGoBack) { journal.GoBack();   }
             });
             GoForwardCommand = new DelegateCommand(() =>
 
