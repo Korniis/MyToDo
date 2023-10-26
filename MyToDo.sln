@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyToDo", "MyToDo\MyToDo.csproj", "{779EC299-5785-435E-B5A6-34948D38544D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToDo.Api", "MyToDo.Api\MyToDo.Api.csproj", "{7EBDCD12-C79D-409E-A223-5043FC013C22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyToDo.Api", "MyToDo.Api\MyToDo.Api.csproj", "{7EBDCD12-C79D-409E-A223-5043FC013C22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToDo.Shared", "MyToDo.Shared\MyToDo.Shared.csproj", "{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7EBDCD12-C79D-409E-A223-5043FC013C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EBDCD12-C79D-409E-A223-5043FC013C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EBDCD12-C79D-409E-A223-5043FC013C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
