@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using MyToDo.Api;
 using MyToDo.Api.Context;
+using MyToDo.Api.Context.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +11,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyToDo.Api", Version = "v1" });
+
+});
 builder.Services.AddDbContext<MyToDoContext>(option =>
 {
     var constr = builder.Configuration.GetSection("ConnectionStrings")["ToDoConnection"];
     option.UseSqlite(constr);
-});
+}).AddUnitOfWork<MyToDoContext>()
+.AddCustomRepository<ToDo, ToDoRepository>()
+.AddCustomRepository<Memo, MemoRepository>()
+.AddCustomRepository<User, UserRepository>();
 var app = builder.Build();
 
 

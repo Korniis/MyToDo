@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MyToDo.Api.Context;
 
 namespace MyToDo.Api.Controllers
 {
@@ -10,17 +11,18 @@ namespace MyToDo.Api.Controllers
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
-
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IUnitOfWork unitOfWork;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            this.unitOfWork = unitOfWork;
         }
-
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public  IEnumerable<WeatherForecast> Get()
         {
+         
+            var rng= new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

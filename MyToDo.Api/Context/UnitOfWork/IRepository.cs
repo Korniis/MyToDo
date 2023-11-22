@@ -11,6 +11,7 @@
     using Microsoft.EntityFrameworkCore;
     using MyToDo.Shared.Contact;
 
+
     /// <summary>
     /// Defines the interfaces for generic repository.
     /// 为通用存储库定义接口
