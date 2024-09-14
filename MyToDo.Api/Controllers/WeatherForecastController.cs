@@ -8,21 +8,21 @@ namespace MyToDo.Api.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
-        {
+     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly IUnitOfWork unitOfWork;
-        public WeatherForecastController(ILogger<WeatherForecastController> logger,IUnitOfWork unitOfWork)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             this.unitOfWork = unitOfWork;
         }
         [HttpGet(Name = "GetWeatherForecast")]
-        public  IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> Get()
         {
-         
-            var rng= new Random();
+
+            var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
