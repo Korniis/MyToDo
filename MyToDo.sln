@@ -4,10 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyToDo", "MyToDo\MyToDo.csproj", "{779EC299-5785-435E-B5A6-34948D38544D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D} = {4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyToDo.Api", "MyToDo.Api\MyToDo.Api.csproj", "{7EBDCD12-C79D-409E-A223-5043FC013C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToDo.Shared", "MyToDo.Shared\MyToDo.Shared.csproj", "{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyToDo.Shared", "MyToDo.Shared\MyToDo.Shared.csproj", "{4F0A1EDF-2B0E-4774-A4B6-2D44F8C8716D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

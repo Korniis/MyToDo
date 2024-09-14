@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using MyToDo.Api;
 using MyToDo.Api.Context;
 using MyToDo.Api.Context.Repository;
+using MyToDo.Api.Extensions;
 using MyToDo.Api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.AddDbContext<MyToDoContext>(option =>
 .AddCustomRepository<Memo, MemoRepository>()
 .AddCustomRepository<User, UserRepository>();
 builder.Services.AddTransient<IToDoService,ToDoService>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProFile));
 var app = builder.Build();
 
 

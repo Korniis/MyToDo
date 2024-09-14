@@ -11,11 +11,12 @@ namespace MyToDo.Shared.Dtos
     public class BaseDto : INotifyPropertyChanged
     {
         public int Id { get; set; }
+        public DateTime CreateTime { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string propertyName="")
+       public void OnPropertyChanged([CallerMemberName] string propertyName="")
         {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

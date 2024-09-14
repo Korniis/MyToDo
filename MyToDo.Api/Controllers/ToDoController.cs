@@ -2,6 +2,7 @@
 using MyToDo.Api.Context;
 using Microsoft.EntityFrameworkCore;
 using MyToDo.Api.Service;
+using MyToDo.Shared.Dtos;
 
 
 namespace MyToDo.Api.Controllers
@@ -24,10 +25,10 @@ namespace MyToDo.Api.Controllers
         public async Task<ApiResponse> GetAll()=> await toDoService.GetAllAsync();
 
         [HttpPost]
-        public async Task<ApiResponse> Add([FromBody] ToDo toDo)=> await toDoService.AddAsync(toDo);
+        public async Task<ApiResponse> Add([FromBody] ToDoDto toDo)=> await toDoService.AddAsync(toDo);
 
         [HttpPut]
-        public async Task<ApiResponse> Update([FromBody] ToDo toDo) => await toDoService.UpdateAsync(toDo);
+        public async Task<ApiResponse> Update([FromBody] ToDoDto toDo) => await toDoService.UpdateAsync(toDo);
 
         [HttpDelete]
         public async Task<ApiResponse> Delete(int id) => await toDoService.DeleteAsync(id);
