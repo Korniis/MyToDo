@@ -1,4 +1,6 @@
 ﻿using MyToDo.Common.Models;
+using MyToDo.Service;
+using MyToDo.Shared.Dtos;
 using Prism.Commands;
 using Prism.Common;
 using Prism.Mvvm;
@@ -13,16 +15,19 @@ namespace MyToDo.ViewModels
 {
     public class ToDoViewModel : BindableBase
     {
-        public ToDoViewModel()
+        public ToDoViewModel(IToDoService toDoService)
         {
             ToDoDtos = new ObservableCollection<ToDoDto>();
-            CreatToDoList();
+
             AddCommand = new DelegateCommand(Add);
+
+            this.toDoService = toDoService;
+            CreatToDoList();
         }
 
         private void Add()
         {
-           IsRightDrawerOpen = true;
+            IsRightDrawerOpen = true;
         }
         /// <summary>
         /// 右侧窗口展开
@@ -32,26 +37,31 @@ namespace MyToDo.ViewModels
         public bool IsRightDrawerOpen
         {
             get { return isRightDrawerOpen; }
-            set { isRightDrawerOpen = value;  RaisePropertyChanged(); }
+            set { isRightDrawerOpen = value; RaisePropertyChanged(); }
         }
 
         private ObservableCollection<ToDoDto> toDoDtos;
+        private readonly IToDoService toDoService;
 
         public ObservableCollection<ToDoDto> ToDoDtos
         {
             get { return toDoDtos; }
             set { toDoDtos = value; RaisePropertyChanged(); }
         }
-        void CreatToDoList()
+        async void CreatToDoList()
         {
-            for (int i = 0; i < 20; i++)
+            var todoResult = await toDoService.GetAllAsync(new Shared.Parameters.QueryParameter
             {
-                ToDoDtos.Add(new ToDoDto()
+                PageIndex = 0,
+                PageSize = 100,
+            });
+            if (todoResult.Status)
+            {
+                ToDoDtos.Clear();
+                foreach (var item in todoResult.Result.Items)
                 {
-                    Title = "标题" + i,
-                    Content = "测试数据"
-                });
-
+                    ToDoDtos.Add(item);
+                }
 
             }
         }

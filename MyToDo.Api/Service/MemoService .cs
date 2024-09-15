@@ -5,24 +5,24 @@ using MyToDo.Shared.Parameters;
 
 namespace MyToDo.Api.Service
 {
-    public class ToDoService : IToDoService
+    public class MemoService : IMemoService
     {
         public readonly IUnitOfWork work;
         private readonly IMapper mapper;
-        public ToDoService(IUnitOfWork work,IMapper mapper)
+        public MemoService(IUnitOfWork work, IMapper mapper)
         {
             this.mapper = mapper;
             this.work = work;
 
         }
-        public async Task<ApiResponse> AddAsync(ToDoDto Model)
+        public async Task<ApiResponse> AddAsync(MemoDto Model)
         {
             try
             {
-                var todo = mapper.Map<ToDo>(Model);
+                var todo = mapper.Map<Memo>(Model);
                 todo.CreateDate = DateTime.UtcNow;
                 todo.UpdateDate = DateTime.UtcNow;
-                await work.GetRepository<ToDo>().InsertAsync(todo);
+                await work.GetRepository<Memo>().InsertAsync(todo);
                 if (await work.SaveChangesAsync() > 0)
                     return new ApiResponse(true, Model);
                 return new ApiResponse("添加数据失败");
@@ -38,8 +38,8 @@ namespace MyToDo.Api.Service
         {
             try
             {
-                var todo = await work.GetRepository<ToDo>().GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(id));
-                work.GetRepository<ToDo>().Delete(todo);
+                var todo = await work.GetRepository<Memo>().GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(id));
+                work.GetRepository<Memo>().Delete(todo);
                 if (await work.SaveChangesAsync() > 0)
                     return new ApiResponse(true, todo);
                 return new ApiResponse("添加数据失败");
@@ -55,7 +55,7 @@ namespace MyToDo.Api.Service
             try
             {
 
-             var toDos = await work.GetRepository<ToDo>().GetPagedListAsync(predicate: x => string.IsNullOrWhiteSpace(queryParameter.Search) ? true : x.Title.Equals(queryParameter.Search),
+                var memos = await work.GetRepository<Memo>().GetPagedListAsync(predicate: x => string.IsNullOrWhiteSpace(queryParameter.Search) ? true : x.Title.Equals(queryParameter.Search),
                     pageIndex: queryParameter.PageIndex,
                     pageSize: queryParameter.PageSize,
                     orderBy: source => source.OrderByDescending(t => t.CreateDate)
@@ -63,7 +63,7 @@ namespace MyToDo.Api.Service
                     );
 
 
-                return new ApiResponse(true, toDos);
+                return new ApiResponse(true, memos);
 
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace MyToDo.Api.Service
             try
             {
 
-                ToDo value = await work.GetRepository<ToDo>().GetFirstOrDefaultAsync(predicate: t => t.Id == id);
+                Memo value = await work.GetRepository<Memo>().GetFirstOrDefaultAsync(predicate: t => t.Id == id);
 
 
                 return new ApiResponse(true, value);
@@ -89,17 +89,16 @@ namespace MyToDo.Api.Service
             }
         }
 
-        public async Task<ApiResponse> UpdateAsync(ToDoDto Model)
+        public async Task<ApiResponse> UpdateAsync(MemoDto Model)
         {
             try
             {
-                var dbtodo = mapper.Map<ToDo>(Model);
-                var todo = await work.GetRepository<ToDo>().GetFirstOrDefaultAsync(predicate: t => t.Id == Model.Id); ;
+                var dbtodo = mapper.Map<Memo>(Model);
+                var todo = await work.GetRepository<Memo>().GetFirstOrDefaultAsync(predicate: t => t.Id == Model.Id); ;
                 todo.UpdateDate = DateTime.Now;
-                todo.Status = dbtodo.Status;
                 todo.Title = dbtodo.Title;
                 todo.Content = dbtodo.Content;
-                work.GetRepository<ToDo>().Update(todo);
+                work.GetRepository<Memo>().Update(todo);
                 if (await work.SaveChangesAsync() > 0)
                     return new ApiResponse(true, todo);
                 return new ApiResponse("修改数据失败");

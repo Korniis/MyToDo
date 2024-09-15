@@ -28,6 +28,8 @@ builder.Services.AddDbContext<MyToDoContext>(option =>
 .AddCustomRepository<Memo, MemoRepository>()
 .AddCustomRepository<User, UserRepository>();
 builder.Services.AddTransient<IToDoService,ToDoService>();
+builder.Services.AddTransient<IMemoService,MemoService>();
+builder.Services.AddTransient<ILoginService,LoginService>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProFile));
 var app = builder.Build();
 

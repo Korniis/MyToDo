@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using MyToDo.Service;
 using MyToDo.ViewModels;
 using MyToDo.Views;
 using Prism.DryIoc;
@@ -24,11 +25,16 @@ namespace MyToDo
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.GetContainer().Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey: "webUrl"));
+            containerRegistry.GetContainer().RegisterInstance(@"http://localhost:5048/", serviceKey: "webUrl");
+            containerRegistry.Register<IToDoService, ToDoService>();
+            containerRegistry.Register<IMemoService, MemoService>();
+
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
-            containerRegistry.RegisterForNavigation< ToDoView, ToDoViewModel>();
-            containerRegistry.RegisterForNavigation< MemoView, MemoViewModel>();
-            containerRegistry.RegisterForNavigation< SettingsView, SettingsViewModel>();
-            containerRegistry.RegisterForNavigation< ToDoView, ToDoViewModel>();
+            containerRegistry.RegisterForNavigation<ToDoView, ToDoViewModel>();
+            containerRegistry.RegisterForNavigation<MemoView, MemoViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
+            containerRegistry.RegisterForNavigation<ToDoView, ToDoViewModel>();
             containerRegistry.RegisterForNavigation<NetView, NetViewModel>();
             containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
             containerRegistry.RegisterForNavigation<AboutView, AboutViewModel>();
