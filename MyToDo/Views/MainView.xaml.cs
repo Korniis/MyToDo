@@ -1,4 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
+using MyToDo.Extensions;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,22 @@ namespace MyToDo.Views
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView()
+        public MainView(IEventAggregator eventAggregator)
         {
             InitializeComponent();
+
+            eventAggregator.Register(a =>
+            {
+
+                DialogHost.IsOpen = a.IsOpen;
+                if (DialogHost.IsOpen)
+                {
+                    DialogHost.DialogContent = new ProgressView();
+
+
+                }
+            });
+
             btnMin.Click += (s, e) => { this.WindowState = WindowState.Minimized; };
             btnMax.Click += (s, e) =>
             {
@@ -37,7 +52,8 @@ namespace MyToDo.Views
                 if (e.LeftButton == MouseButtonState.Pressed)
                     this.DragMove();
             };
-            ColorZone.MouseDoubleClick += (s, e) => {
+            ColorZone.MouseDoubleClick += (s, e) =>
+            {
 
                 if (this.WindowState == WindowState.Maximized)
                     this.WindowState = WindowState.Normal;
@@ -48,7 +64,7 @@ namespace MyToDo.Views
             {
                 drawerHost.IsLeftDrawerOpen = false;
             };
-          
+
 
         }
 
