@@ -19,9 +19,57 @@ namespace MyToDo.ViewModels
         public ToDoViewModel(IToDoService toDoService, IContainerProvider containerProvider) : base(containerProvider)
         {
             ToDoDtos = new ObservableCollection<ToDoDto>();
-            AddCommand = new DelegateCommand(Add);
+            ExcuteCommand = new DelegateCommand<string>(Excute);
+            SelectedCommand = new DelegateCommand<ToDoDto>(Select);
             this.toDoService = toDoService;
         }
+
+        private void Excute(string obj)
+        {
+          switch(obj)
+            {
+
+                case "新增":  Add(); break;
+                case "查询" :  QuerySearch();break;
+
+            }
+        }
+
+        private async void QuerySearch()
+        {
+            await GetDataAsync();
+        }
+
+        private ToDoDto currentDto;
+
+        public ToDoDto CurrentDto
+        {
+            get { return currentDto; }
+            set { currentDto = value; RaisePropertyChanged(); }
+        }
+
+        private async void Select(ToDoDto dto)
+        {
+            try
+            {
+                UpdateLoading(true);
+                var todoResult = await toDoService.GetFirstOfDefaultAsync(dto.Id);
+                if (todoResult.Status)
+                {
+                    CurrentDto = todoResult.Result;
+
+                    IsRightDrawerOpen = true;
+
+                }
+                UpdateLoading(false);
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+        }
+
         private void Add()
         {
             IsRightDrawerOpen = true;
@@ -45,13 +93,14 @@ namespace MyToDo.ViewModels
         /// <summary>
         /// 获取数据
         /// </summary>
-        async void GetDataAsync()
+        async Task GetDataAsync()
         {
             UpdateLoading(true);
             var todoResult = await toDoService.GetAllAsync(new Shared.Parameters.QueryParameter
             {
                 PageIndex = 0,
                 PageSize = 100,
+                Search = Search,
             });
             if (todoResult.Status)
             {
@@ -63,11 +112,21 @@ namespace MyToDo.ViewModels
             }
             UpdateLoading(false);
         }
-        public DelegateCommand AddCommand { get; private set; }
+        public DelegateCommand<string> ExcuteCommand { get; private set; }
+        public DelegateCommand<ToDoDto> SelectedCommand { get; private set; }
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             base.OnNavigatedTo(navigationContext);
             GetDataAsync();
         }
+        private String search;
+
+        public String Search
+        {
+            get { return search; }
+            set { search = value;  RaisePropertyChanged(); }
+        }
+
+
     }
 }
