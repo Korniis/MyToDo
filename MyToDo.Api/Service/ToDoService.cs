@@ -24,7 +24,7 @@ namespace MyToDo.Api.Service
                 todo.UpdateDate = DateTime.UtcNow;
                 await work.GetRepository<ToDo>().InsertAsync(todo);
                 if (await work.SaveChangesAsync() > 0)
-                    return new ApiResponse(true, Model);
+                    return new ApiResponse(true, todo);
                 return new ApiResponse("添加数据失败");
             }
             catch (Exception ex)

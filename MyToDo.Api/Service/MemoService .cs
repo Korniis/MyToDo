@@ -19,12 +19,12 @@ namespace MyToDo.Api.Service
         {
             try
             {
-                var todo = mapper.Map<Memo>(Model);
-                todo.CreateDate = DateTime.UtcNow;
-                todo.UpdateDate = DateTime.UtcNow;
-                await work.GetRepository<Memo>().InsertAsync(todo);
+                var memo = mapper.Map<Memo>(Model);
+                memo.CreateDate = DateTime.UtcNow;
+                memo.UpdateDate = DateTime.UtcNow;
+                await work.GetRepository<Memo>().InsertAsync(memo);
                 if (await work.SaveChangesAsync() > 0)
-                    return new ApiResponse(true, Model);
+                    return new ApiResponse(true, memo);
                 return new ApiResponse("添加数据失败");
             }
             catch (Exception ex)

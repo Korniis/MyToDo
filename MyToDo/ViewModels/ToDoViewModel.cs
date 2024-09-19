@@ -21,8 +21,11 @@ namespace MyToDo.ViewModels
             ToDoDtos = new ObservableCollection<ToDoDto>();
             ExcuteCommand = new DelegateCommand<string>(Excute);
             SelectedCommand = new DelegateCommand<ToDoDto>(Select);
+            DeleteCommand = new DelegateCommand<ToDoDto>(Delete);
             this.toDoService = toDoService;
         }
+
+    
 
         private void Excute(string obj)
         {
@@ -32,8 +35,29 @@ namespace MyToDo.ViewModels
                 case "新增": Add(); break;
                 case "查询": QuerySearch(); break;
                 case "保存": Save(); break;
+               
 
             }
+        }
+        private async void Delete(ToDoDto obj)
+        {
+            try
+            {
+                var deleteResult = await toDoService.DeleteAsync(obj.Id);
+                if (deleteResult.Status)
+                {
+
+
+                    ToDoDtos.Remove(obj);
+
+
+
+                }
+            }
+            catch (Exception ex) { 
+            
+            }
+
         }
 
         private async void Save()
@@ -165,6 +189,8 @@ namespace MyToDo.ViewModels
         }
         public DelegateCommand<string> ExcuteCommand { get; private set; }
         public DelegateCommand<ToDoDto> SelectedCommand { get; private set; }
+        public DelegateCommand<ToDoDto> DeleteCommand { get; private set; }
+
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             base.OnNavigatedTo(navigationContext);
