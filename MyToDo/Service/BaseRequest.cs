@@ -13,5 +13,6 @@ namespace MyToDo.Service
         public string Route { get; set; }
         public string ContentType { get; set; } = "application/json";
         public object Parameter { get; set; }
+       // public string Accept { get; set; } = "application/json";
     }
 }
