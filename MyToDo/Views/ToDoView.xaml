@@ -45,7 +45,7 @@
                         Text="{Binding CurrentDto.Content}" />
                     <Button
                         Margin="20,0"
-                        Command="{Binding ExecuteCommand}"
+                        Command="{Binding ExcuteCommand}"
                         CommandParameter="保存"
                         Content="添加到待办"
                         DockPanel.Dock="Top" />
@@ -91,7 +91,8 @@
                     Margin="10,5"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
-                    Command="{Binding AddCommand}"
+                    Command="{Binding ExcuteCommand}"
+                    CommandParameter="新增"
                     Content="+ 添加代办" />
                 <ScrollViewer  Grid.Row="1">
                     <ItemsControl

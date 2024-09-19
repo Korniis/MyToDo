@@ -26,13 +26,62 @@ namespace MyToDo.ViewModels
 
         private void Excute(string obj)
         {
-          switch(obj)
+            switch (obj)
             {
 
-                case "新增":  Add(); break;
-                case "查询" :  QuerySearch();break;
+                case "新增": Add(); break;
+                case "查询": QuerySearch(); break;
+                case "保存": Save(); break;
 
             }
+        }
+
+        private async void Save()
+        {
+            if (string.IsNullOrWhiteSpace(CurrentDto.Content) || string.IsNullOrWhiteSpace(CurrentDto.Title))
+            {
+                return;
+            }
+            UpdateLoading(true);
+            try
+            {
+                if (CurrentDto.Id > 0)
+                {
+                    var UpdateResult = await toDoService.UpdateAsync(CurrentDto);
+                    if (UpdateResult.Status)
+                    {
+                        var todo = ToDoDtos.FirstOrDefault(t => t.Id == currentDto.Id);
+                        if (todo != null)
+                        {
+                            todo.Title = CurrentDto.Title;
+                            todo.Content = CurrentDto.Content;
+                            todo.Status = CurrentDto.Status;
+                            IsRightDrawerOpen = false;
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    var addResult = await toDoService.AddAsync(CurrentDto);
+                    if (addResult.Status)
+                    {
+                        ToDoDtos.Add(addResult.Result);
+                        IsRightDrawerOpen = false;
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                UpdateLoading(false);
+            }
+
         }
 
         private async void QuerySearch()
@@ -63,7 +112,7 @@ namespace MyToDo.ViewModels
                 }
                 UpdateLoading(false);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -72,6 +121,8 @@ namespace MyToDo.ViewModels
 
         private void Add()
         {
+            CurrentDto = new ToDoDto();
+
             IsRightDrawerOpen = true;
         }
         /// <summary>
@@ -124,7 +175,7 @@ namespace MyToDo.ViewModels
         public String Search
         {
             get { return search; }
-            set { search = value;  RaisePropertyChanged(); }
+            set { search = value; RaisePropertyChanged(); }
         }
 
 

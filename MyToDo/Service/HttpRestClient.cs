@@ -33,6 +33,8 @@ public class HttpRestClient
     {
         var request = new RestRequest(baseRequest.Route, baseRequest.Method);
         request.AddHeader("Content-Type", baseRequest.ContentType);
+        
+
         if (baseRequest.Parameter != null)
         {
             request.AddParameter("param", JsonConvert.SerializeObject(baseRequest.Parameter), ParameterType.RequestBody);

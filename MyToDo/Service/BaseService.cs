@@ -25,6 +25,7 @@ namespace MyToDo.Service
             BaseRequest request = new BaseRequest();
             request.Method = RestSharp.Method.Post;
             request.Route = $"api/{serviceName}/Add";
+
             request.Parameter = entity;
             return await client.ExecuteAsync<TEntity>(request);
         }
@@ -59,7 +60,7 @@ namespace MyToDo.Service
         public async Task<ApiResponse<TEntity>> UpdateAsync(TEntity entity)
         {
             BaseRequest request = new BaseRequest();
-            request.Method = RestSharp.Method.Post;
+            request.Method = RestSharp.Method.Put;
             request.Route = $"api/{serviceName}/Update";
             request.Parameter = entity;
             return await client.ExecuteAsync<TEntity>(request);
