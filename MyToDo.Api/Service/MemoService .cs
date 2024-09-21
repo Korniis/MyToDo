@@ -72,6 +72,28 @@ namespace MyToDo.Api.Service
             }
         }
 
+/*        public async Task<ApiResponse> GetAllAsync(QueryParameter queryParameter)
+        {
+            try
+            {
+
+                var memos = await work.GetRepository<Memo>().GetPagedListAsync(predicate: x => string.IsNullOrWhiteSpace(queryParameter.Search) ? true : x.Title.Contains(queryParameter.Search),
+                    pageIndex: queryParameter.PageIndex,
+                    pageSize: queryParameter.PageSize,
+                    orderBy: source => source.OrderByDescending(t => t.CreateDate)
+
+                    );
+
+
+                return new ApiResponse(true, memos);
+
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(ex.Message);
+            }
+        }*/
+
         public async Task<ApiResponse> GetSingleAsync(int id)
         {
             try

@@ -9,7 +9,10 @@
 
   <ItemGroup>
     <None Remove="Images\touxiang.jpg" />
+    <None Remove="Resource\favicon.ico" />
+    <None Remove="Resource\login.png" />
     <None Remove="Resource\touxiang.jpg" />
+    <None Remove="Resource\wind.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resource\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resource\login.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\touxiang.jpg" />
+    <Resource Include="Resource\wind.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using MyToDo.Common.Models;
 using MyToDo.Service;
 using MyToDo.Shared.Dtos;
+using MyToDo.Shared.Parameters;
 using Prism.Commands;
 using Prism.Common;
 using Prism.Ioc;
@@ -22,21 +23,16 @@ namespace MyToDo.ViewModels
             ExcuteCommand = new DelegateCommand<string>(Excute);
             SelectedCommand = new DelegateCommand<ToDoDto>(Select);
             DeleteCommand = new DelegateCommand<ToDoDto>(Delete);
+            FilterCommand = new DelegateCommand(FilterSearch);
             this.toDoService = toDoService;
         }
-
-    
-
         private void Excute(string obj)
         {
             switch (obj)
             {
-
                 case "新增": Add(); break;
                 case "查询": QuerySearch(); break;
                 case "保存": Save(); break;
-               
-
             }
         }
         private async void Delete(ToDoDto obj)
@@ -46,20 +42,13 @@ namespace MyToDo.ViewModels
                 var deleteResult = await toDoService.DeleteAsync(obj.Id);
                 if (deleteResult.Status)
                 {
-
-
                     ToDoDtos.Remove(obj);
-
-
-
                 }
             }
-            catch (Exception ex) { 
-            
+            catch (Exception ex)
+            {
             }
-
         }
-
         private async void Save()
         {
             if (string.IsNullOrWhiteSpace(CurrentDto.Content) || string.IsNullOrWhiteSpace(CurrentDto.Title))
@@ -81,10 +70,8 @@ namespace MyToDo.ViewModels
                             todo.Content = CurrentDto.Content;
                             todo.Status = CurrentDto.Status;
                             IsRightDrawerOpen = false;
-
                         }
                     }
-
                 }
                 else
                 {
@@ -93,9 +80,7 @@ namespace MyToDo.ViewModels
                     {
                         ToDoDtos.Add(addResult.Result);
                         IsRightDrawerOpen = false;
-
                     }
-
                 }
             }
             catch (Exception ex)
@@ -105,22 +90,22 @@ namespace MyToDo.ViewModels
             {
                 UpdateLoading(false);
             }
-
         }
-
         private async void QuerySearch()
+        {
+            await GetDataAsync();
+        }
+        private async void FilterSearch()
         {
             await GetDataAsync();
         }
 
         private ToDoDto currentDto;
-
         public ToDoDto CurrentDto
         {
             get { return currentDto; }
             set { currentDto = value; RaisePropertyChanged(); }
         }
-
         private async void Select(ToDoDto dto)
         {
             try
@@ -130,23 +115,17 @@ namespace MyToDo.ViewModels
                 if (todoResult.Status)
                 {
                     CurrentDto = todoResult.Result;
-
                     IsRightDrawerOpen = true;
-
                 }
                 UpdateLoading(false);
             }
             catch (Exception ex)
             {
-
             }
-
         }
-
         private void Add()
         {
             CurrentDto = new ToDoDto();
-
             IsRightDrawerOpen = true;
         }
         /// <summary>
@@ -171,10 +150,12 @@ namespace MyToDo.ViewModels
         async Task GetDataAsync()
         {
             UpdateLoading(true);
-            var todoResult = await toDoService.GetAllAsync(new Shared.Parameters.QueryParameter
+            int? Status = SelectedIndex == 0 ? null : SelectedIndex == 2 ? 1 : 0;
+            var todoResult = await toDoService.GetAllFilterAsync(new ToDoParameter
             {
                 PageIndex = 0,
                 PageSize = 100,
+                Status = Status,
                 Search = Search,
             });
             if (todoResult.Status)
@@ -187,23 +168,30 @@ namespace MyToDo.ViewModels
             }
             UpdateLoading(false);
         }
+       
+        public DelegateCommand FilterCommand { get; set; }
         public DelegateCommand<string> ExcuteCommand { get; private set; }
         public DelegateCommand<ToDoDto> SelectedCommand { get; private set; }
         public DelegateCommand<ToDoDto> DeleteCommand { get; private set; }
-
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             base.OnNavigatedTo(navigationContext);
             GetDataAsync();
         }
         private String search;
-
         public String Search
         {
             get { return search; }
             set { search = value; RaisePropertyChanged(); }
         }
+        private int selectedIndex;
 
+
+        public int SelectedIndex
+        {
+            get { return selectedIndex; }
+            set { selectedIndex = value; RaisePropertyChanged(); }
+        }
 
     }
 }

@@ -23,7 +23,7 @@ namespace MyToDo.Api.Controllers
 
 
         [HttpGet]
-        public async Task<ApiResponse> GetAll([FromQuery] QueryParameter queryParameter)=> await toDoService.GetAllAsync(queryParameter);
+        public async Task<ApiResponse> GetAll([FromQuery] ToDoParameter queryParameter)=> await toDoService.GetAllAsync(queryParameter);
 
         [HttpPost]
         public async Task<ApiResponse> Add([FromBody] ToDoDto toDo)=> await toDoService.AddAsync(toDo);

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Arch.EntityFrameworkCore.UnitOfWork;
+using AutoMapper;
 using MyToDo.Api.Context;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Parameters;
@@ -9,7 +10,7 @@ namespace MyToDo.Api.Service
     {
         public readonly IUnitOfWork work;
         private readonly IMapper mapper;
-        public ToDoService(IUnitOfWork work,IMapper mapper)
+        public ToDoService(IUnitOfWork work, IMapper mapper)
         {
             this.mapper = mapper;
             this.work = work;
@@ -50,17 +51,40 @@ namespace MyToDo.Api.Service
             }
         }
 
+        public async Task<ApiResponse> GetAllAsync(ToDoParameter queryParameter)
+        {
+            try
+            {
+
+                var toDos = await work.GetRepository<ToDo>().GetPagedListAsync(predicate: x => (string.IsNullOrWhiteSpace(queryParameter.Search) ? true : x.Title.Contains(queryParameter.Search))
+                && (queryParameter.Status == null ? true : x.Status.Equals(queryParameter.Status)),
+                pageIndex: queryParameter.PageIndex,
+                pageSize: queryParameter.PageSize,
+                orderBy: source => source.OrderByDescending(t => t.CreateDate));
+
+
+                return new ApiResponse(true, toDos);
+
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(ex.Message);
+            }
+        }
+
         public async Task<ApiResponse> GetAllAsync(QueryParameter queryParameter)
         {
             try
             {
 
-             var toDos = await work.GetRepository<ToDo>().GetPagedListAsync(predicate: x => string.IsNullOrWhiteSpace(queryParameter.Search) ? true : x.Title.Equals(queryParameter.Search),
-                    pageIndex: queryParameter.PageIndex,
-                    pageSize: queryParameter.PageSize,
-                    orderBy: source => source.OrderByDescending(t => t.CreateDate)
+                var toDos = await work.GetRepository<ToDo>().GetPagedListAsync(predicate: x => string.IsNullOrWhiteSpace(queryParameter.Search) ? true : x.Title.Equals(queryParameter.Search)
+             ,
+                       pageIndex: queryParameter.PageIndex,
+                       pageSize: queryParameter.PageSize,
 
-                    );
+                       orderBy: source => source.OrderByDescending(t => t.CreateDate)
+
+                       );
 
 
                 return new ApiResponse(true, toDos);
