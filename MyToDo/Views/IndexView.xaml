@@ -16,7 +16,57 @@
             <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock FontSize="22" Text=" 你好 今天是 " />
+        <StackPanel Orientation="Horizontal">
+         
+                <!-- DateNow TextBlock -->
+                <TextBlock FontSize="28" FontWeight="Bold" Margin="5" Text="{Binding DateNow}" TextAlignment="Center">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF445C73" Offset="0"/>
+                            <GradientStop Color="Black" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                    <TextBlock.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFA6C849" Offset="0"/>
+                            <GradientStop Color="#FFB2E622" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Background>
+                </TextBlock>
+
+                <!-- DayNow TextBlock -->
+                <TextBlock FontSize="26" FontWeight="SemiBold" Margin="5" Text="{Binding DayNow}" TextAlignment="Center">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF73A8D4" Offset="0"/>
+                            <GradientStop Color="#FF3C6997" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                    <TextBlock.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFDB7093" Offset="0"/>
+                            <GradientStop Color="#FFF08080" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Background>
+                </TextBlock>
+
+                <!-- TimeNow TextBlock -->
+                <TextBlock FontSize="26" FontWeight="SemiBold" Margin="5" Text="{Binding TimeNow}" TextAlignment="Center">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFD4AF37" Offset="0"/>
+                            <GradientStop Color="#FF8B5A2B" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                    <TextBlock.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFFFEFD5" Offset="0"/>
+                            <GradientStop Color="#FFF5DEB3" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Background>
+                </TextBlock>
+
+        </StackPanel>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding TaskBars}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -24,29 +74,30 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                
+
                 <DataTemplate>
                     <Border
-                        Cursor="Hand"
                         Margin="10"
                         Background="{Binding Color}"
-                        CornerRadius="5">
+                        CornerRadius="5"
+                        Cursor="Hand">
                         <Border.Style>
- 
+
                             <Style TargetType="Border">
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Effect" >
+                                        <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect Color="LightGray" ShadowDepth="1" BlurRadius="10">
-                                                   
-                                                </DropShadowEffect>
+                                                <DropShadowEffect
+                                                    BlurRadius="10"
+                                                    ShadowDepth="1"
+                                                    Color="LightGray" />
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
-                            
+
                         </Border.Style>
                         <Grid>
                             <StackPanel Margin="10,10">
@@ -119,21 +170,24 @@
                 </DockPanel>
 
 
-                <ListBox ItemsSource="{Binding ToDoDtos}" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <ListBox
+                    HorizontalContentAlignment="Stretch"
+                    ItemsSource="{Binding ToDoDtos}"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <DockPanel  MaxHeight="80" LastChildFill="True">
-                                <ToggleButton DockPanel.Dock="Right"/>
+                            <DockPanel MaxHeight="80" LastChildFill="True">
+                                <ToggleButton DockPanel.Dock="Right" />
                                 <StackPanel Cursor="Hand">
-                                <TextBlock
-                                    FontSize="16"
-                                    FontWeight="Bold"
-                                    Text="{Binding Title}" />
-                                <TextBlock
-                                    Margin="0,5"
-                                    Opacity="0.5"
-                                    Text="{Binding Content}" />
-                            </StackPanel>
+                                    <TextBlock
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Text="{Binding Title}" />
+                                    <TextBlock
+                                        Margin="0,5"
+                                        Opacity="0.5"
+                                        Text="{Binding Content}" />
+                                </StackPanel>
                             </DockPanel>
                         </DataTemplate>
 
