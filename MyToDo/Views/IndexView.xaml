@@ -17,54 +17,74 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-         
-                <!-- DateNow TextBlock -->
-                <TextBlock FontSize="28" FontWeight="Bold" Margin="5" Text="{Binding DateNow}" TextAlignment="Center">
-                    <TextBlock.Foreground>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF445C73" Offset="0"/>
-                            <GradientStop Color="Black" Offset="1"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Foreground>
-                    <TextBlock.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFA6C849" Offset="0"/>
-                            <GradientStop Color="#FFB2E622" Offset="1"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Background>
-                </TextBlock>
+            <TextBlock
+                Margin="5"
+                FontSize="28"
+                FontWeight="Bold"
+                Text="今天是:   "
+                TextAlignment="Center" />
+            <!--  DateNow TextBlock  -->
+            <TextBlock
+                Margin="5"
+                FontSize="28"
+                FontWeight="Bold"
+                Text="{Binding DateNow}"
+                TextAlignment="Center">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="#FF445C73" />
+                        <GradientStop Offset="1" Color="Black" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+                <TextBlock.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="#FFA6C849" />
+                        <GradientStop Offset="1" Color="#FFB2E622" />
+                    </LinearGradientBrush>
+                </TextBlock.Background>
+            </TextBlock>
 
-                <!-- DayNow TextBlock -->
-                <TextBlock FontSize="26" FontWeight="SemiBold" Margin="5" Text="{Binding DayNow}" TextAlignment="Center">
-                    <TextBlock.Foreground>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF73A8D4" Offset="0"/>
-                            <GradientStop Color="#FF3C6997" Offset="1"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Foreground>
-                    <TextBlock.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFDB7093" Offset="0"/>
-                            <GradientStop Color="#FFF08080" Offset="1"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Background>
-                </TextBlock>
+            <!--  DayNow TextBlock  -->
+            <TextBlock
+                Margin="5"
+                FontSize="26"
+                FontWeight="SemiBold"
+                Text="{Binding DayNow}"
+                TextAlignment="Center">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="#FF73A8D4" />
+                        <GradientStop Offset="1" Color="#FF3C6997" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+                <TextBlock.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="#FFDB7093" />
+                        <GradientStop Offset="1" Color="#FFF08080" />
+                    </LinearGradientBrush>
+                </TextBlock.Background>
+            </TextBlock>
 
-                <!-- TimeNow TextBlock -->
-                <TextBlock FontSize="26" FontWeight="SemiBold" Margin="5" Text="{Binding TimeNow}" TextAlignment="Center">
-                    <TextBlock.Foreground>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFD4AF37" Offset="0"/>
-                            <GradientStop Color="#FF8B5A2B" Offset="1"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Foreground>
-                    <TextBlock.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FFFFEFD5" Offset="0"/>
-                            <GradientStop Color="#FFF5DEB3" Offset="1"/>
-                        </LinearGradientBrush>
-                    </TextBlock.Background>
-                </TextBlock>
+            <!--  TimeNow TextBlock  -->
+            <TextBlock
+                Margin="5"
+                FontSize="26"
+                FontWeight="SemiBold"
+                Text="{Binding TimeNow}"
+                TextAlignment="Center">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="#FFD4AF37" />
+                        <GradientStop Offset="1" Color="#FF8B5A2B" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+                <TextBlock.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="#FFFFEFD5" />
+                        <GradientStop Offset="1" Color="#FFF5DEB3" />
+                    </LinearGradientBrush>
+                </TextBlock.Background>
+            </TextBlock>
 
         </StackPanel>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding TaskBars}">
@@ -163,6 +183,8 @@
                         Width="30"
                         Height="30"
                         VerticalAlignment="Top"
+                        Command="{Binding ExcuteCommand}"
+                        CommandParameter="新增待办"
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
                         <materialDesign:PackIcon Cursor="" Kind="Add" />
@@ -215,6 +237,8 @@
                         Width="30"
                         Height="30"
                         VerticalAlignment="Top"
+                        Command="{Binding ExcuteCommand}"
+                        CommandParameter="新增备忘"
                         Cursor="Hand"
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">

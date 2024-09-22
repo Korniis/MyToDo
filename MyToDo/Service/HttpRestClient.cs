@@ -7,13 +7,13 @@ using System;
 
 public class HttpRestClient
 {
-    private readonly string apiUrl;
+    private readonly string webUrl;
     protected readonly RestClient client;
 
-    public HttpRestClient(string apiUrl)
+    public HttpRestClient(string webUrl)
     {
-        this.apiUrl = apiUrl;
-        this.client = new RestClient(new Uri(apiUrl));
+        this.webUrl = webUrl;
+        this.client = new RestClient(new Uri(webUrl));
     }
 
     public async Task<ApiResponse> ExecuteAsync(BaseRequest baseRequest)

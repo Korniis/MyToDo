@@ -1,5 +1,7 @@
-﻿using MyToDo.Common.Models;
+﻿using MyToDo.Common;
+using MyToDo.Common.Models;
 using MyToDo.Extensions;
+using MyToDo.Views;
 using Prism.Commands;
 using Prism.Common;
 using Prism.Mvvm;
@@ -12,12 +14,12 @@ using System.Text;
 using System.Threading.Tasks;
 namespace MyToDo.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : BindableBase, IConfigureService
     {
         public MainViewModel(IRegionManager regionManager)
         {
             MenuBars = new ObservableCollection<MenuBar>();
-            CreateMenuBars();
+   
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
             GoBackCommand = new DelegateCommand(() =>
@@ -62,6 +64,15 @@ namespace MyToDo.ViewModels
             MenuBars.Add(new MenuBar() { Icon = "Note", NameSpace = "MemoView", Title = "备忘录" });
             MenuBars.Add(new MenuBar() { Icon = "Net", NameSpace = "NetView", Title = "上网" });
             MenuBars.Add(new MenuBar() { Icon = "Cog", NameSpace = "SettingsView", Title = "设置" });
+        }
+        /// <summary>
+        /// 配置首页初始化参数
+        /// </summary>
+        /// <param name="configureService"></param>
+        public void Configure( )
+        {
+            CreateMenuBars();
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
         }
     }
 }
