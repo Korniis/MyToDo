@@ -31,6 +31,13 @@ namespace MyToDo.ViewModels
                 if (journal != null && journal.CanGoForward) { journal.GoForward(); }
             });
         }
+        private string userName;
+
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; RaisePropertyChanged(); }
+        }
         private void Navigate(MenuBar obj)
         {
             if (obj == null || string.IsNullOrWhiteSpace(obj.NameSpace))
@@ -71,6 +78,7 @@ namespace MyToDo.ViewModels
         /// <param name="configureService"></param>
         public void Configure( )
         {
+            UserName = AppSession.UserName;
             CreateMenuBars();
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
         }

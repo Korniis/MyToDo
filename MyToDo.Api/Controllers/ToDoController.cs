@@ -28,6 +28,8 @@ namespace MyToDo.Api.Controllers
         [HttpPost]
         public async Task<ApiResponse> Add([FromBody] ToDoDto toDo)=> await toDoService.AddAsync(toDo);
 
+        [HttpGet]
+        public async Task<ApiResponse> Summary() => await toDoService.Summary();
         [HttpPut]
         public async Task<ApiResponse> Update([FromBody] ToDoDto toDo) => await toDoService.UpdateAsync(toDo);
 

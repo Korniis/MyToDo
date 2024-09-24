@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyToDo.ViewModels;
 
 namespace MyToDo.Service
 {
@@ -28,6 +29,12 @@ namespace MyToDo.Service
                 $"&search={parameter.Search}"+
                 $"&status={parameter.Status}";
             return await client.ExecuteAsync<PagedList<ToDoDto>>(request);
+        }
+        public async Task<ApiResponse<SummaryDto>> SummaryAsync()
+        {
+            BaseRequest request = new BaseRequest();
+            request.Route = "api/ToDo/Summary";
+            return await client.ExecuteAsync<SummaryDto>(request);
         }
     }
 }

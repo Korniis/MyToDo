@@ -26,6 +26,10 @@ namespace MyToDo.Views
         {
             InitializeComponent();
 
+            eventAggregator.ResgiterMessage(arg =>
+            {
+                Snackbar.MessageQueue.Enqueue(arg.Message);
+            });
             eventAggregator.Register(a =>
             {
 
@@ -37,6 +41,7 @@ namespace MyToDo.Views
 
                 }
             });
+
 
             btnMin.Click += (s, e) => { this.WindowState = WindowState.Minimized; };
             btnMax.Click += (s, e) =>

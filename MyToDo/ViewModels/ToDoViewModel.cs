@@ -1,4 +1,7 @@
-﻿using MyToDo.Common.Models;
+﻿using MaterialDesignThemes.Wpf;
+using MyToDo.Common;
+using MyToDo.Common.Models;
+using MyToDo.Extensions;
 using MyToDo.Service;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Parameters;
@@ -8,24 +11,31 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 namespace MyToDo.ViewModels
 {
     public class ToDoViewModel : NavigationViewModel
     {
-        public ToDoViewModel(IToDoService toDoService, IContainerProvider containerProvider) : base(containerProvider)
+        private readonly IDialogHostService dialogHost;
+        private readonly IToDoService toDoService;
+
+        public ToDoViewModel(IToDoService service, IContainerProvider provider)
+            : base(provider)
         {
             ToDoDtos = new ObservableCollection<ToDoDto>();
             ExcuteCommand = new DelegateCommand<string>(Excute);
             SelectedCommand = new DelegateCommand<ToDoDto>(Select);
             DeleteCommand = new DelegateCommand<ToDoDto>(Delete);
-            FilterCommand = new DelegateCommand(FilterSearch);
-            this.toDoService = toDoService;
+            dialogHost = provider.Resolve<IDialogHostService>();
+            this.toDoService = service;
         }
+
         private void Excute(string obj)
         {
             switch (obj)
@@ -39,6 +49,8 @@ namespace MyToDo.ViewModels
         {
             try
             {
+                var dialogResult = await dialogHost.Question("温馨提示", $"确认删除待办事项:{obj.Title} ?");
+                if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
                 var deleteResult = await toDoService.DeleteAsync(obj.Id);
                 if (deleteResult.Status)
                 {
@@ -138,7 +150,6 @@ namespace MyToDo.ViewModels
             set { isRightDrawerOpen = value; RaisePropertyChanged(); }
         }
         private ObservableCollection<ToDoDto> toDoDtos;
-        private readonly IToDoService toDoService;
         public ObservableCollection<ToDoDto> ToDoDtos
         {
             get { return toDoDtos; }

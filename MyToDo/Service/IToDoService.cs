@@ -2,6 +2,7 @@
 using MyToDo.Shared.Contact;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Parameters;
+using MyToDo.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace MyToDo.Service
     {
         Task<ApiResponse<PagedList<ToDoDto>>> GetAllFilterAsync(ToDoParameter toDoParameter);
 
+        public  Task<ApiResponse<SummaryDto>> SummaryAsync();
 
     }
 }

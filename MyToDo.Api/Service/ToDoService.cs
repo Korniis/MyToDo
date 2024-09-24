@@ -3,6 +3,8 @@ using AutoMapper;
 using MyToDo.Api.Context;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Parameters;
+using MyToDo.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace MyToDo.Api.Service
 {
@@ -110,6 +112,34 @@ namespace MyToDo.Api.Service
             catch (Exception ex)
             {
                 return new ApiResponse(ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse> Summary()
+        {
+            try
+            {
+                //待办事项结果
+                var todos = await work.GetRepository<ToDo>().GetAllAsync(
+                    orderBy: source => source.OrderByDescending(t => t.CreateDate));
+
+                //备忘录结果
+                var memos = await work.GetRepository<Memo>().GetAllAsync(
+                    orderBy: source => source.OrderByDescending(t => t.CreateDate));
+
+                SummaryDto summary = new SummaryDto();
+                summary.Sum = todos.Count(); //汇总待办事项数量
+                summary.CompletedCount = todos.Where(t => t.Status == 1).Count(); //统计完成数量
+                summary.CompletedRatio = (summary.CompletedCount / (double)summary.Sum).ToString("0%"); //统计完成率
+                summary.MemoeCount = memos.Count();  //汇总备忘录数量
+                summary.ToDoList = new ObservableCollection<ToDoDto>(mapper.Map<List<ToDoDto>>(todos.Where(t => t.Status == 0)));
+                summary.MemoList = new ObservableCollection<MemoDto>(mapper.Map<List<MemoDto>>(memos));
+
+                return new ApiResponse(true, summary);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(false, "");
             }
         }
 
