@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace MyToDo.Shared.Dtos
 {
-    public class UserDto : BaseDto
+    public class ResgiterUserDto : BaseDto
     {
         private string userName;
+
         public string UserName
         {
             get { return userName; }
@@ -16,6 +17,7 @@ namespace MyToDo.Shared.Dtos
         }
 
         private string account;
+
         public string Account
         {
             get { return account; }
@@ -23,11 +25,19 @@ namespace MyToDo.Shared.Dtos
         }
 
         private string passWord;
+
         public string PassWord
         {
             get { return passWord; }
             set { passWord = value; OnPropertyChanged(); }
         }
 
+        private string newpassWord;
+
+        public string NewPassWord
+        {
+            get { return newpassWord; }
+            set { newpassWord = value; OnPropertyChanged(); }
+        }
     }
 }

@@ -22,7 +22,7 @@ public class HttpRestClient
         request.AddHeader("Content-Type", baseRequest.ContentType);
         if (baseRequest.Parameter != null)
         {
-            request.AddParameter("param", JsonConvert.SerializeObject(baseRequest.Parameter), ParameterType.RequestBody);
+            request.AddJsonBody(baseRequest.Parameter);
         }
 
         var response = await client.ExecuteAsync(request);

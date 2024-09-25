@@ -7,6 +7,7 @@ using MyToDo.Views;
 using MyToDo.Views.Dialogs;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +15,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 namespace MyToDo
 {
     /// <summary>
@@ -25,8 +27,36 @@ namespace MyToDo
         {
             return Container.Resolve<MainView>();
         }
+        public static void LoginOut(IContainerProvider containerProvider)
+        {
+            Current.MainWindow.Hide();
+
+            var dialog = containerProvider.Resolve<IDialogService>();
+
+            dialog.ShowDialog("LoginView", callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+
+                Current.MainWindow.Show();
+            });
+        }
         protected override void OnInitialized()
         {
+            var dialog = Container.Resolve<IDialogHostService>();
+            dialog.ShowDialog("LoginView", callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+
+                }
+            });
+
             var service = App.Current.MainWindow.DataContext as IConfigureService;
             if (service != null)
             {
@@ -39,6 +69,7 @@ namespace MyToDo
             containerRegistry.GetContainer().Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey: "webUrl"));
             containerRegistry.GetContainer().RegisterInstance(@"http://localhost:5048/", serviceKey: "webUrl");
             containerRegistry.Register<IToDoService, ToDoService>();
+            containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.Register<IMemoService, MemoService>();
             containerRegistry.Register<IDialogHostService, DialogHostService>();
 
@@ -47,7 +78,7 @@ namespace MyToDo
             containerRegistry.RegisterForNavigation<AddToDoView, AddToDoViewModel>();
             containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
-
+            containerRegistry.RegisterForNavigation<LoginView,LoginViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
             containerRegistry.RegisterForNavigation<ToDoView, ToDoViewModel>();
             containerRegistry.RegisterForNavigation<MemoView, MemoViewModel>();
